@@ -99,19 +99,19 @@ const Leaderboard = () => {
   return (
     <>
       <div className="w-full flex flex-col items-center py-10">
-        <p className="text-2xl font-bold mb-10">Ranking</p>
+        <p className="text-lg sm:text-2xl font-bold mb-10">Ranking</p>
         <div></div>
         <div className="w-5/6 flex flex-col gap-3 overflow-scroll h-screen">
             <div className="p-4 flex">
               <p className="font-bold text-lg w-3/5"></p>
-              <p className="font-bold text-lg w-1/5">Guess</p>
-              <p className="font-bold text-lg w-1/5">Points</p>
+              <p className="font-bold text-md sm:text-lg w-1/5">Guess</p>
+              <p className="font-bold text-md sm:text-lg w-1/5">Points</p>
             </div>
           {playerStat.map((stat, id) => (
             <div className="border p-4 flex rounded-sm border-gray-300 ">
-              <p className="font-bold text-lg w-3/5 flex items-center">{stat.name} {getRank(id)} </p>
-              <p className="font-bold text-lg w-1/5">{stat.guess}</p>
-              <p className="font-bold text-lg w-1/5">{stat.point}</p>
+              <p className="font-bold text-md sm:text-lg w-3/5 flex items-center">{stat.name} {getRank(id)} </p>
+              <p className="font-bold text-md sm:text-lg w-1/5">{stat.guess}</p>
+              <p className="font-bold text-md sm:text-lg w-1/5">{stat.point}</p>
             </div>
           ))}
         </div>

@@ -19,9 +19,9 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="flex flex-row md:flex-col items-center w-full gap-4 m-auto">
+      <div className="flex flex-row md:flex-col items-center justify-center w-full gap-4 m-auto">
         {list.map((l) => (
-            <Link to={l.url} className="border border-2 rounded-sm border-gray-500 p-4 text-md w-1/4 md:w-full cursor-pointer">
+            <Link to={l.url} className="border border-2 rounded-sm border-gray-500 p-4 text-md sm:text-lg w-1/4 md:w-full cursor-pointer">
           <div className="">{l.name}</div>
             </Link>
         ))}
