@@ -17,7 +17,7 @@ function Map() {
     lat: 4.2105,
     lng: 101.9758,
   };
-  const [draggable, setDraggable] = useState(false);
+  const [draggable, setDraggable] = useState(true);
   const [position, setPosition] = useState(center);
   const markerRef = useRef(null);
   const eventHandlers = useMemo(
@@ -38,12 +38,12 @@ function Map() {
   }, []);
   return (
     <div className="w-full h-full flex flex-col md:flex-row justify-center items-center p-0">
-      <div className="w-full lg:w-5/6 h-full flex justify-center items-center">
+      <div className="w-full lg:w-5/6 h-full flex justify-center items-center rounded-2xl bg-gray-200 my-2">
         <MapContainer
           center={[4.2105, 101.9758]}
           zoom={7}
           scrollWheelZoom={true}
-          style={{ width: "90%", height: "90%" }}
+          style={{ width: "95%", height: "95%" }}
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
