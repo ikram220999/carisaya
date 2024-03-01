@@ -38,7 +38,7 @@ function Map() {
   }, []);
   return (
     <div className="w-full h-full flex flex-col md:flex-row justify-center items-center p-0">
-      <div className="w-full lg:w-5/6 h-full flex justify-center items-center rounded-2xl bg-gray-200 my-2">
+      <div className="w-full lg:w-5/6 h-full flex justify-center items-center my-2">
         <MapContainer
           center={[4.2105, 101.9758]}
           zoom={7}
@@ -56,13 +56,6 @@ function Map() {
             position={position}
             ref={markerRef}
           >
-            <Popup minWidth={90}>
-              <span onClick={toggleDraggable}>
-                {draggable
-                  ? "Marker is draggable"
-                  : "Click here to make marker draggable"}
-              </span>
-            </Popup>
           </Marker>
           <Circle center={position} pathOptions={fillGreenOptions} radius={1000} />
           <Circle center={position} pathOptions={fillRedOptions} radius={100000} />
@@ -73,18 +66,18 @@ function Map() {
       </div>
       <div className="w-full lg:w-2/6 mb-4 flex flex-col justify-center items-center">
         <div className="border p-4 mb-5 w-5/6">
-        <p className="text-lg font-semibold mb-2">Evidence</p>
+        <p className="text-md sm:text-lg font-bold mb-2">Evidence</p>
           <form>
             <input type="file" multiple></input>
           </form>
         </div>
         <div className="mb-10 border p-4 mb-5 w-5/6">
-          <p className="text-lg font-semibold">Coordinate</p>
-          <p>Latitude : {position.lat}</p>
-          <p>Longitude : {position.lng}</p>
+          <p className="text-md sm:text-lg font-bold">Coordinate</p>
+          <p className="text-xs sm:text-lg">Latitude : {position.lat}</p>
+          <p className="text-xs sm:text-lg">Longitude : {position.lng}</p>
 
         </div>
-        <button className="border border-gray-500 p-4 w-5/6 md:w-5/6">
+        <button className="border border-gray-500 p-4 w-5/6 md:w-5/6 hover:bg-gray-100 cursor-pointer text-xs sm:text-sm">
           Challenge
         </button>
       </div>

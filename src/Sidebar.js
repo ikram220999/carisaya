@@ -26,12 +26,12 @@ const Sidebar = () => {
         {list.map((l) => (
           <>
           {currentUrl == l.url ? (
-             <Link to={l.url} className="border border-2 rounded-sm border-gray-500 bg-gray-500 text-white p-4 text-md sm:text-lg w-1/3 md:w-full cursor-pointer">
+             <Link to={l.url} className="border border-2 rounded-sm border-gray-500 bg-gray-500 text-white p-4 text-xs sm:text-lg w-1/3 md:w-full cursor-pointer ">
              <div className="">{l.name}</div>
              </Link>
           ) : (
 
-            <Link to={l.url} className="border border-2 rounded-sm border-gray-500 p-4 text-md sm:text-lg w-1/3 md:w-full cursor-pointer">
+            <Link to={l.url} className="border border-2 rounded-sm border-gray-500 p-4 text-xs sm:text-lg w-1/3 md:w-full cursor-pointer hover:bg-gray-100">
             <div className="">{l.name}</div>
             </Link>
             )}

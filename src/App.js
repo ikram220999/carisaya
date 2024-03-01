@@ -9,6 +9,7 @@ import Sidebar from "./Sidebar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Leaderboard from "./Leaderboard";
 import Guess from "./Guess";
+import GuessPage from "./GuessPage";
 
 function App() {
   const [markers, setMarker] = useState([]);
@@ -43,6 +44,7 @@ function App() {
             <Routes>
               <Route element={<Map />} path="/challenge" />
               <Route element={<Guess />} path="/guess" />
+              <Route element={<GuessPage />} path="/guess/:id" />
               <Route element={<Leaderboard />} path="/leaderboard" />
             </Routes>
           </BrowserRouter>

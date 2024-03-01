@@ -1,0 +1,18 @@
+.wrapper {
+    border: 0px solid ;
+    border-radius: 20%;
+  }
+  
+  .container {
+    background-color: white;
+  }
+  
+  .barCompleted {
+    background-color: lightblue;
+    width: 40% ;
+  }
+  
+  .label {
+    font-size: 15px;
+    color: black;
+  }
