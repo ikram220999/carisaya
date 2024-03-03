@@ -18,6 +18,10 @@ const Sidebar = () => {
       url: "/leaderboard",
       name: "Leaderboard",
     },
+    {
+      url: "/account",
+      name: "Account",
+    },
   ];
 
   return (

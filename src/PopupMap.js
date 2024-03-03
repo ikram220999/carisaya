@@ -164,7 +164,7 @@ const PopupMap = (props) => {
                     </button>
                   </span>
                 </div></>
-            ) : (
+             ) : (
               <>
                 <div class="mt-0 sm:mt-4 sm:flex sm:flex-row-reverse justify-center items-center">
                   <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
