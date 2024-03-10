@@ -11,6 +11,7 @@ import Leaderboard from "./Leaderboard";
 import Guess from "./Guess";
 import GuessPage from "./GuessPage";
 import Login from "./Login";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [markers, setMarker] = useState([]);
@@ -34,10 +35,11 @@ function App() {
     zoom: 11,
   };
 
-  let isAuth = localStorage.getItem('user');
+  let isAuth = localStorage.getItem('userType');
   return (
     <>
       <div className="App">
+      <div><Toaster /></div>
         {isAuth ? (
           <div className="flex flex-col md:flex-row m-auto border h-screen bg-gray-100">
             <BrowserRouter>
@@ -45,11 +47,23 @@ function App() {
                 <Sidebar />
               </div>
               <Routes>
-                <Route path="*" element={<Navigate to="/challenge" />} />
-                <Route element={<Map />} path="/challenge" />
-                <Route element={<Guess />} path="/guess" />
-                <Route element={<GuessPage />} path="/guess/:id" />
-                <Route element={<Leaderboard />} path="/ranking" />
+                {isAuth == "main" ? (
+                  <>
+                  <Route path="*" element={<Navigate to="/challenge" />} />
+                  <Route element={<Map />} path="/challenge" />
+                  <Route element={<Guess />} path="/guess" />
+                  <Route element={<GuessPage />} path="/guess/:id" />
+                  <Route element={<Leaderboard />} path="/ranking" />
+                  </>
+                ) : (
+                  <>
+                  <Route path="*" element={<Navigate to="/guess" />} />
+                  <Route element={<Guess />} path="/guess" />
+                  <Route element={<GuessPage />} path="/guess/:id" />
+                  <Route element={<Leaderboard />} path="/ranking" />
+                  </>
+                )}
+                
               </Routes>
             </BrowserRouter>
             {/* <div className="w-5/6 p-4">

@@ -8,7 +8,7 @@ import PopupMap from "./PopupMap";
 
 const Guess = () => {
   
-  let data = [1,1,1,1,1,1,1,1]
+  let data = [1]
   const [isGuess, setIsGuess] = useState(false)
 
 
