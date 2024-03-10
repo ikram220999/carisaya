@@ -15,14 +15,18 @@ const Sidebar = () => {
       name: "Guess",
     },
     {
-      url: "/leaderboard",
-      name: "Leaderboard",
+      url: "/ranking",
+      name: "Ranking",
     },
-    {
-      url: "/account",
-      name: "Account",
-    },
+    
   ];
+
+  const logout = () => {
+    localStorage.clear()
+    window.location.reload()
+  }
+
+  let isAuth = localStorage.getItem('user');
 
   return (
     <>
@@ -30,17 +34,25 @@ const Sidebar = () => {
         {list.map((l) => (
           <>
           {currentUrl == l.url ? (
-             <Link to={l.url} className="border border-2 rounded-sm border-gray-500 bg-gray-500 text-white p-4 text-xs sm:text-lg w-1/3 md:w-full cursor-pointer ">
+             <Link to={l.url} className="border border-2 rounded-md border-gray-600 bg-gray-600 text-white p-4 text-xs sm:text-lg w-1/3 md:w-full cursor-pointer ">
              <div className="">{l.name}</div>
              </Link>
           ) : (
 
-            <Link to={l.url} className="border border-2 rounded-sm border-gray-500 p-4 text-xs sm:text-lg w-1/3 md:w-full cursor-pointer hover:bg-gray-100">
+            <Link to={l.url} className="border border-2 rounded-md border-gray-600 p-4 text-xs sm:text-lg w-1/3 md:w-full cursor-pointer hover:bg-gray-200">
             <div className="">{l.name}</div>
             </Link>
             )}
           </>
         ))}
+        {isAuth ? (
+
+          <button className="border border-2 border-red-700 rounded-md text-white p-4 text-xs sm:text-lg w-1/3 md:w-full cursor-pointer hover:bg-red-500 bg-red-600" onClick={() => logout()}>
+            <div className="">{'Logout'}</div>
+            </button>
+           ) : (
+            ""
+           )}
       </div>
     </>
   );

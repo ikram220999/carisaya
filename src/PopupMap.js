@@ -104,7 +104,11 @@ const PopupMap = (props) => {
                       eventHandlers={eventHandlers}
                       position={position}
                       ref={markerRef}
-                    ></Marker>
+                    >
+                       <Popup>
+                            Your marker !
+                          </Popup>
+                    </Marker>
                     {resultAvailable ? (
                       <>
                         <Marker
@@ -114,7 +118,7 @@ const PopupMap = (props) => {
                           ref={markerRef}
                         >
                           <Popup>
-                            A pretty CSS3 popup. <br /> Easily customizable.
+                            Challenge marker !
                           </Popup>
                         </Marker>
                         <Circle

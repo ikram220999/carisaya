@@ -108,7 +108,7 @@ const Leaderboard = () => {
               <p className="font-bold text-md sm:text-lg w-1/5">Points</p>
             </div>
           {playerStat.map((stat, id) => (
-            <div className="border p-4 flex rounded-sm border-gray-300 ">
+            <div className="border p-4 flex rounded-md border-gray-300 ">
               <p className="font-bold text-md sm:text-lg w-3/5 flex items-center">{stat.name} {getRank(id)} </p>
               <p className="font-bold text-md sm:text-lg w-1/5">{stat.guess}</p>
               <p className="font-bold text-md sm:text-lg w-1/5">{stat.point}</p>

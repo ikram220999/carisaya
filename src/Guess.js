@@ -23,7 +23,7 @@ const Guess = () => {
             </div>
             <div>
               {/* <Link to={"/guess/1"}> */}
-                <button className="p-3 border w-full border-2 rounded-sm border-gray-400 cursor-pointer hover:bg-gray-100" onClick={() => setIsGuess((prev) => !prev)}>Guess</button>
+                <button className="p-3 border w-full border-2 rounded-md border-gray-400 cursor-pointer hover:bg-gray-200" onClick={() => setIsGuess((prev) => !prev)}>Guess</button>
               {/* </Link> */}
             </div>
             {isGuess ? (
