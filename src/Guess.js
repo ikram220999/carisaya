@@ -16,14 +16,14 @@ const Guess = () => {
     <>
     <div className="w-full overflow-scroll">
       {data.map((data) => (
-        <div className="border m-4 border-2 border-gray-300 p-4 flex flex-col  rounded-md  shadow-xs">
+        <div className="border m-4 p-4 flex flex-col  rounded-md  shadow-md">
             <div className="h-40 sm:h-60  mb-4 flex gap-2 overflow-scroll">
               <img src={mg} alt="img"></img>
               <img src={mg2} alt="img"></img>
             </div>
             <div>
               {/* <Link to={"/guess/1"}> */}
-                <button className="p-3 border w-full border-2 rounded-md border-gray-400 cursor-pointer hover:bg-gray-200" onClick={() => setIsGuess((prev) => !prev)}>Guess</button>
+                <button className="border rounded-md px-4 py-3 bg-gray-300 text-gray-500 font-semibold md:text-lg w-full hover:bg-gray-200" onClick={() => setIsGuess((prev) => !prev)}>Guess</button>
               {/* </Link> */}
             </div>
             {isGuess ? (

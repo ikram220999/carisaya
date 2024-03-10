@@ -47,7 +47,7 @@ const Sidebar = () => {
         ))}
         {isAuth ? (
 
-          <button className="border border-2 border-red-700 rounded-md text-white p-4 text-xs sm:text-lg w-1/3 md:w-full cursor-pointer hover:bg-red-500 bg-red-600" onClick={() => logout()}>
+          <button className="border border-2 border-red-600 rounded-md text-white p-4 text-xs sm:text-lg w-1/3 md:w-full cursor-pointer hover:bg-red-400 bg-red-500" onClick={() => logout()}>
             <div className="">{'Logout'}</div>
             </button>
            ) : (
