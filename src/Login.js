@@ -19,12 +19,13 @@ const Login = () => {
   console.log("input", input);
 
     const login = () => {
-      axios.post(`${process.env.REACT_APP_API_HOSTNAME}/auth/login`, input
+      axios.post(`${process.env.REACT_APP_API_HOSTNAME}/api/auth/login`, input
       ).then((res) => {
         console.log(res);
         if(res.status == 200) {
           localStorage.setItem("access_token", res.data.access_token)
           localStorage.setItem("userType", "main")
+          localStorage.setItem("userId", res.data.user.id)
           toast.success("Success login")
           setTimeout(() => {
             window.location.reload()
@@ -39,6 +40,8 @@ const Login = () => {
 
     const loginGuest = () => {
       localStorage.setItem("userType", "guest")
+      localStorage.setItem("userId", 0)
+
       toast.success("Login as guest")
       setTimeout(() => {
         window.location.reload()

@@ -34,6 +34,7 @@ function Map() {
 
   const [draggable, setDraggable] = useState(true);
   const [position, setPosition] = useState(center);
+  const [evidence, setEvidence] = useState([])
   const markerRef = useRef(null);
   const eventHandlers = useMemo(
     () => ({
@@ -58,9 +59,20 @@ function Map() {
 
   const createChallenge = () => {
     const accessToken = localStorage.getItem("access_token");
-    
+
+    // Create a FormData object
+    const formData = new FormData();
+
+    // Append each File object to the FormData object
+    for (let i = 0; i < evidence.length; i++) {
+      formData.append(`file[${i}]`, evidence[i]);  // Adjust the key and append the actual file
+    }
+    // formData.append(`file`, evidence);
+    formData.append('lat', position.lat)
+    formData.append('lng', position.lng)
+
     axios
-      .post(`${process.env.REACT_APP_API_HOSTNAME}/challenge/new`, position, {
+      .post(`${process.env.REACT_APP_API_HOSTNAME}/api/challenge/new`, formData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -75,6 +87,12 @@ function Map() {
         // Additional error handling if needed
       });
   };
+
+  const uploadFile = (e) => {
+    setEvidence(e.target.files)
+  }
+
+  console.log(evidence);
 
   useEffect(() => {
     calculateResult();
@@ -140,8 +158,19 @@ function Map() {
         <div className="border border-gray-300 rounded-md p-4 mb-5 w-5/6">
           <p className="text-md sm:text-lg font-bold mb-2">Evidence</p>
           <form>
-            <input type="file" multiple></input>
+            <input type="file" name="evidence" onChange={(e) => uploadFile(e)} multiple></input>
           </form>
+          {/* Display selected file names */}
+          {evidence.length > 0 && (
+            <div>
+              <p>Selected Files:</p>
+              <ul>
+                {Array.from(evidence).map((file, index) => (
+                  <li key={index}>{file.name}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
         <div className="mb-10 border-gray-300 border rounded-md p-4 mb-5 w-5/6">
           <p className="text-md sm:text-lg font-bold">Coordinate</p>
