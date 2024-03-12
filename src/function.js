@@ -1,4 +1,5 @@
 export function haversineDistance(coord1, coord2) {
+  console.log("as", coord1, coord2);
     const earthRadius = 6371; // Radius of the Earth in kilometers
   
     const toRadians = (angle) => (angle * Math.PI) / 180;

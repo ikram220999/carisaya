@@ -9,6 +9,7 @@ import axios from "axios";
 const Guess = () => {
   let data = [1];
   const [isGuess, setIsGuess] = useState(false);
+  const [idChallenge, setIdChallenge] = useState(-1);
   const [challenge, setChallenge] = useState([]);
 
   const fetchChallenge = () => {
@@ -22,6 +23,12 @@ const Guess = () => {
       })
       .catch((err) => {});
   };
+
+  const startGuess = (idChallenge) => {
+    setIdChallenge(idChallenge)
+    setIsGuess((prev) => !prev)
+  }
+
   useEffect(() => {
     fetchChallenge();
   }, []);
@@ -45,13 +52,13 @@ const Guess = () => {
               {/* <Link to={"/guess/1"}> */}
               <button
                 className="border rounded-md px-4 py-2 bg-gray-300 text-gray-500 md:text-lg w-full hover:bg-gray-200"
-                onClick={() => setIsGuess((prev) => !prev)}
+                onClick={() => startGuess(data.id)}
               >
                 Guess
               </button>
               {/* </Link> */}
             </div>
-            {isGuess ? <PopupMap setIsGuess={setIsGuess} /> : ""}
+            {isGuess ? <PopupMap setIsGuess={setIsGuess} idChallenge={idChallenge} /> : ""}
           </div>
         ))}
       </div>

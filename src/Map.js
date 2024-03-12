@@ -10,6 +10,8 @@ import {
   Popup,
   TileLayer,
   useMap,
+  useMapEvent,
+  useMapEvents,
 } from "react-leaflet";
 import { haversineDistance } from "./function";
 import axios from "axios";
@@ -34,6 +36,7 @@ function Map() {
 
   const [draggable, setDraggable] = useState(true);
   const [position, setPosition] = useState(center);
+  const [mapCenter, setMapCenter] = useState(center)
   const [evidence, setEvidence] = useState([])
   const markerRef = useRef(null);
   const eventHandlers = useMemo(
@@ -42,6 +45,7 @@ function Map() {
         const marker = markerRef.current;
         if (marker != null) {
           setPosition(marker.getLatLng());
+          setMapCenter(marker.getLatLng())
         }
       },
     }),
@@ -56,6 +60,28 @@ function Map() {
   const toggleDraggable = useCallback(() => {
     setDraggable((d) => !d);
   }, []);
+
+  function handleLocationClick() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+      console.log("Geolocation not supported");
+    }
+  }
+
+  function success(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    
+    setMapCenter({lat: latitude, lng: longitude})
+    setPosition({lat: latitude, lng: longitude})
+
+    console.log("user location", latitude, longitude);
+  }
+
+  function error() {
+    console.log("Unable to retrieve your location");
+  }
 
   const createChallenge = () => {
     const accessToken = localStorage.getItem("access_token");
@@ -93,19 +119,29 @@ function Map() {
   }
 
   console.log(evidence);
+  function MyComponent() {
+    const map = useMapEvents({
+      click() {
+        map.flyTo(position, map.getZoom())
+      }
+    })
+  }
 
   useEffect(() => {
     calculateResult();
   }, []);
+
   return (
     <div className="w-full h-full flex flex-col md:flex-row justify-center items-center p-0 ">
       <div className="w-full h-full flex justify-center items-center my-2 ">
         <MapContainer
-          center={[4.2105, 101.9758]}
+          center={[position.lat, position.lng]}
           zoom={7}
           scrollWheelZoom={true}
           style={{ width: "95%", height: "95%" }}
         >
+                <MyComponent />
+
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -182,6 +218,12 @@ function Map() {
           onClick={() => createChallenge()}
         >
           Challenge
+        </button>
+        <button
+          className="border border-gray-400 p-4 w-5/6 md:w-5/6 bg-gray-500 text-white font-bold hover:bg-gray-400 cursor-pointer text-xs sm:text-sm rounded-md"
+          onClick={() => handleLocationClick()}
+        >
+          Current location
         </button>
       </div>
     </div>

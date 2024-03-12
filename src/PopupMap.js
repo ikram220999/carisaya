@@ -1,14 +1,22 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Circle, MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { haversineDistance } from "./function";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const PopupMap = (props) => {
   const [submit, setSubmit] = useState(false);
   const [resultAvailable, setResultAvailable] = useState(false);
+  const [actualResult, setActualResult] = useState({})
   const [center, setCenter] = useState({
     lat: 4.2105,
     lng: 101.9758,
   })
+
+  const second = {
+    lat: 2.877699533432209,
+    lng: 102.79926969150273,
+  };
 
   const [point, setPoint] = useState(0);
   const [distance, setDistance] = useState(0)
@@ -16,6 +24,7 @@ const PopupMap = (props) => {
   const [draggable, setDraggable] = useState(true);
   const [position, setPosition] = useState(center);
   const [accuracy, setAccuracy] = useState(100);
+  const [actual, setActual] = useState(second)
   const markerRef = useRef(null);
   const eventHandlers = useMemo(
     () => ({
@@ -29,21 +38,30 @@ const PopupMap = (props) => {
     []
   );
 
+  const fetchChallengeById = () => {
+
+    console.log(props);
+    axios.get(`${process.env.REACT_APP_API_HOSTNAME}/api/challenge/` + props.idChallenge).then((res) => {
+
+    }).catch((err) => {
+
+    })
+  }
+
   const fillBlueOptions = { color: "blue" };
   const fillYellowOptions = { color: "yellow" };
   const fillRedOptions = { color: "red" };
   const fillGreenOptions = { color: "green" };
   const fillBlackOptions = { color: "black" };
 
-  const second = {
-    lat: 2.877699533432209,
-    lng: 102.79926969150273,
-  };
-
   console.log("position", position);
   const toggleDraggable = useCallback(() => {
     setDraggable((d) => !d);
   }, []);
+
+  // useEffect(() => {
+  //   fetchChallengeById()
+  // }, [props.idChallenge])
 
   const calculatePoint = (distance) => {
     if(distance <= 10){
@@ -61,18 +79,58 @@ const PopupMap = (props) => {
     }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setDraggable(false);
-    let distance = haversineDistance(position, second)
+    let actResult = {}
+    await axios.get(`${process.env.REACT_APP_API_HOSTNAME}/api/challenge/` + props.idChallenge).then((res) => {
+      actResult = {
+        lat: res.data.latitude,
+        lng: res.data.longitude
+      }
+      setActualResult(actResult)
+      setActual(actResult)
+    }).catch((err) => {})
+
+    let distance = haversineDistance(position, actResult)
     setCenter(position)
     setDistance(distance)
     setPoint(calculatePoint(distance))
+
+    collectPoint(position.lat, position.lng, calculatePoint(distance))
+
     setSubmit(true);
     setTimeout(() => {
       setResultAvailable(true);
       setSubmit(false);
     }, 3000);
   };
+
+  const collectPoint = async (lat,lng,point) => {
+    let accessToken = localStorage.getItem("access_token")
+
+    let data = {
+      lat: lat,
+      lng: lng,
+      point: point,
+      idChallenge: props.idChallenge
+    }
+
+    if(accessToken){
+      await axios.post(`${process.env.REACT_APP_API_HOSTNAME}/api/guess/submit`, data, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then((res) => {
+        toast.success("Success submit guess")
+        console.log("submit", res);
+      }).catch((err) => {
+        console.log(err);
+      })
+    }
+    // props.setIsGuess(false)
+  }
+
+  console.log("act", actualResult);
 
   return (
     <>
@@ -114,7 +172,7 @@ const PopupMap = (props) => {
                         <Marker
                           draggable={draggable}
                           eventHandlers={eventHandlers}
-                          position={second}
+                          position={actual}
                           ref={markerRef}
                         >
                           <Popup>
@@ -122,27 +180,27 @@ const PopupMap = (props) => {
                           </Popup>
                         </Marker>
                         <Circle
-                          center={second}
+                          center={actual}
                           pathOptions={fillGreenOptions}
                           radius={10000}
                         />
                         <Circle
-                          center={second}
+                          center={actual}
                           pathOptions={fillRedOptions}
                           radius={100000}
                         />
                         <Circle
-                          center={second}
+                          center={actual}
                           pathOptions={fillYellowOptions}
                           radius={50000}
                         />
                         <Circle
-                          center={second}
+                          center={actual}
                           pathOptions={fillBlueOptions}
                           radius={30000}
                         />
                         <Circle
-                          center={second}
+                          center={actual}
                           pathOptions={fillBlackOptions}
                           radius={200000}
                         />
